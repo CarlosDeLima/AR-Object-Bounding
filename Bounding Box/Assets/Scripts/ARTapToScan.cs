@@ -14,32 +14,31 @@ public class ARTapToScan : MonoBehaviour
     void Start()
     {      
         raycastManager = FindObjectOfType<ARRaycastManager>();
-    }
+    }   
 
-   
     void Update()
     {
         UpdatePlacement();
-        if (placementPoseIsValid && Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            PlaceObject();
-        }
+        //if (placementPoseIsValid && Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        //{
+            
+        //}
     }
     
     private void UpdatePlacement()
     {
         var screenCentre = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
-        raycastManager.Raycast(screenCentre, hits, UnityEngine.XR.ARSubsystems.TrackableType.FeaturePoint);
-
-        placementPoseIsValid = hits.Count > 0;
-        if(placementPoseIsValid)
+        if (Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            placementPose = hits[0].pose;
+            raycastManager.Raycast(screenCentre, hits, UnityEngine.XR.ARSubsystems.TrackableType.FeaturePoint);
         }
-    }
-    private void PlaceObject()
-    {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+
+        //    placementPoseIsValid = hits.Count > 0;
+        
+        //if(placementPoseIsValid)
+        //{
+        //    placementPose = hits[0].pose;
+        //}
     }
 }
